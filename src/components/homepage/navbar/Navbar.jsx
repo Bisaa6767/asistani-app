@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { navbar } from "../../../assets/aset";
 
@@ -12,7 +13,6 @@ function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 0);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -55,20 +55,29 @@ function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-[#F9FBF3] px-4 pb-4 flex flex-col gap-2 border-t border-[#C7E9B0]">
-          {navbar.map((nav, index) => (
-            <Link
-              key={index}
-              to={nav.link}
-              className="text-[#406343] py-2 font-semibold border-b border-[#E3F6C4]"
-            >
-              {nav.name}
-            </Link>
-          ))}
-        </div>
-      )}
+      {/* Mobile Menu with Animation */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="md:hidden bg-[#F9FBF3] px-4 pb-4 flex flex-col gap-2"
+          >
+            {navbar.map((nav, index) => (
+              <Link
+                key={index}
+                to={nav.link}
+                className="text-[#406343] py-2 font-semibold hover:text-[#679436]"
+              >
+                {nav.name}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }
