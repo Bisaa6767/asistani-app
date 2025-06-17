@@ -24,7 +24,7 @@ function Hero() {
 
           <div className="block md:hidden w-[100vw]">
             <img
-              src="/homepage/hero/hero.jpg"
+              src="/homepage/hero/hero.webp"
               className="object-cover"
               alt="Hero Image"
               loading="lazy"
@@ -53,7 +53,7 @@ function Hero() {
 
         <div className="hidden md:block w-[100vw] md:max-w-[32rem]">
           <img
-            src="/homepage/hero/hero.jpg"
+            src="/homepage/hero/hero.webp"
             className="object-cover"
             alt="Hero Image"
             loading="lazy"

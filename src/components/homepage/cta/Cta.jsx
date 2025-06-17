@@ -20,7 +20,7 @@ function Cta() {
               Paling Direkomendasikan
             </span>
             <img
-              src="/homepage/cta/pf.png"
+              src="/homepage/cta/pf.webp"
               alt="Pseudomonas fluorescens"
               className="rounded-lg w-full h-36 object-cover mb-2"
             />
@@ -32,7 +32,7 @@ function Cta() {
           {/* Beauveria */}
           <div className="bg-white p-4 rounded-xl shadow-md w-52 hover:shadow-lg transition">
             <img
-              src="/homepage/cta/bb.png"
+              src="/homepage/cta/bb.webp"
               alt="Beauveria bassiana"
               className="rounded-lg w-full h-36 object-cover mb-2"
             />
@@ -44,7 +44,7 @@ function Cta() {
           {/* Trichoderma */}
           <div className="bg-white p-4 rounded-xl shadow-md w-52 hover:shadow-lg transition">
             <img
-              src="/homepage/cta/t.png"
+              src="/homepage/cta/t.webp"
               alt="Trichoderma sp."
               className="rounded-lg w-full h-36 object-cover mb-2"
             />

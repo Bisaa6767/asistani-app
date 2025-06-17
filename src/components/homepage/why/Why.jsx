@@ -50,7 +50,7 @@ function Why() {
           className="text-3xl md:text-4xl font-bold text-[#406343] mb-6"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
           Fitur Utama Kami
@@ -60,25 +60,23 @@ function Why() {
           className="text-[#678D58] max-w-2xl mx-auto mb-12 text-sm md:text-base"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
           viewport={{ once: true }}
         >
           Inilah alasan kenapa platform kami berbeda dari cara lama dan lebih baik untuk petani Indonesia.
         </motion.p>
 
+        {/* Batasi animasi di wrapper saja */}
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-left"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ staggerChildren: 0.2 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
         >
           {features.map((feature, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
               className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition duration-300"
             >
               <div className="flex items-center gap-4 mb-3">
@@ -90,7 +88,7 @@ function Why() {
                 </h3>
               </div>
               <p className="text-sm text-[#678D58]">{feature.desc}</p>
-            </motion.div>
+            </div>
           ))}
         </motion.div>
       </div>
