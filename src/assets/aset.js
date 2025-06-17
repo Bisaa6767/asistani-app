@@ -1,5 +1,3 @@
-// https://colorhunt.co/palette/fffdf6faf6e9ddeb9da0c878
-
 export const navbar = [
   { name: 'Home', link: '/' },
   { name: 'Deteksi', link: '/deteksi' },
