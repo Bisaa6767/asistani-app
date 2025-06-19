@@ -1,21 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import useInViewObserver from "../../../hooks/useInViewObserver"; // sesuaikan path
+import useInViewObserver from "../../../hooks/useInViewObserver"; // Sesuaikan path ini
 
+// PASTIKAN SETIAP ARTIKEL PUNYA ID UNIK DAN STABIL!
 const articles = [
   {
+    id: "article-1", // Contoh ID unik
     title: "5 Ciri-Ciri Tanaman Terinfeksi Jamur Patogen",
     desc: "Pelajari bagaimana mengenali gejala awal infeksi jamur dan langkah-langkah pengendaliannya secara hayati.",
     link: "/artikel/ciri-infeksi-jamur",
     image: '/homepage/blog/pathogen.webp',
   },
   {
+    id: "article-2", // Contoh ID unik
     title: "Panduan Penggunaan Agens Hayati untuk Petani Pemula",
     desc: "Langkah-langkah mudah menggunakan agens hayati seperti Trichoderma dan Pseudomonas untuk tanaman sehat.",
     link: "/artikel/panduan-agens-hayati",
     image: "/homepage/blog/biopest.webp",
   },
   {
+    id: "article-3", // Contoh ID unik
     title: "Mengapa Deteksi Dini Penting dalam Pertanian Modern?",
     desc: "Deteksi sejak awal bisa menyelamatkan hasil panen Anda. Ini alasannya dan bagaimana memulainya.",
     link: "/artikel/deteksi-dini-pertanian",
@@ -25,12 +29,33 @@ const articles = [
 
 function BlogCard({ article }) {
   const [ref, inView] = useInViewObserver();
+  const [showContent, setShowContent] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  useEffect(() => {
+    // Ketika elemen masuk viewport DAN gambar sudah dimuat
+    if (inView && isImageLoaded) {
+      // Berikan penundaan singkat (misal 100ms) sebelum menampilkan kartu.
+      // Ini memberi waktu browser untuk sepenuhnya merender gambar.
+      const timer = setTimeout(() => {
+        setShowContent(true);
+      }, 100); // Sesuaikan durasi penundaan jika perlu (misal 50ms, 150ms)
+
+      return () => clearTimeout(timer); // Cleanup timer saat komponen unmount atau inView/isImageLoaded berubah
+    } else if (!inView && showContent) {
+      // Opsional: Reset state jika elemen keluar dari viewport,
+      // agar animasi bisa diputar ulang saat di-scroll kembali.
+      setShowContent(false);
+      setIsImageLoaded(false); // Reset status gambar juga
+    }
+  }, [inView, isImageLoaded, showContent]); // Tambahkan showContent ke dependency array
 
   return (
     <div
       ref={ref}
+      // Kelas Tailwind untuk transisi opasitas dan efek slide-up
       className={`bg-white rounded-xl shadow-md transition overflow-hidden group duration-500 ease-out transform ${
-        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
       }`}
     >
       <div className="overflow-hidden">
@@ -38,8 +63,8 @@ function BlogCard({ article }) {
           src={article.image}
           alt={article.title}
           className="w-full h-40 object-cover transform group-hover:scale-105 transition duration-500"
-          loading="lazy"
-          decoding="async"
+          onLoad={() => setIsImageLoaded(true)} // Set state saat gambar selesai dimuat
+          loading="lazy" // Penting: Agar gambar yang di luar viewport tidak langsung dimuat
         />
       </div>
       <div className="p-5">
@@ -60,6 +85,7 @@ function BlogCard({ article }) {
   );
 }
 
+// Komponen Blog utama (sama seperti sebelumnya, hanya bagian key yang berubah)
 function Blog() {
   return (
     <section id="blog-preview" className="bg-[#f6f6f6] py-20 px-4">
@@ -72,8 +98,8 @@ function Blog() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-          {articles.map((article, idx) => (
-            <BlogCard key={idx} article={article} />
+          {articles.map((article) => ( // PENTING: Gunakan article.id sebagai key
+            <BlogCard key={article.id} article={article} />
           ))}
         </div>
       </div>
